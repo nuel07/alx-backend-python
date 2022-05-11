@@ -11,7 +11,7 @@ from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    ''' self descriptive '''
+    ''' class to test the client '''
 
     @parameterized.expand([
         ('google'),
@@ -19,7 +19,7 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     @patch('client.get_json')
     def test_org(self, data, mock):
-        ''' self descriptive '''
+        ''' test the org method '''
         endpoint = 'https://api.github.com/orgs/{}'.format(data)
         spec = GithubOrgClient(data)
         spec.org()
@@ -29,7 +29,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ("random-url", {'repos_url': 'http://some_url.com'})
     ])
     def test_public_repos_url(self, name, result):
-        '''self descriptive'''
+        ''' tests the _pulblic_repos_url method '''
         with patch('client.GithubOrgClient.org',
                    PropertyMock(return_value=result)):
             response = GithubOrgClient(name)._public_repos_url
@@ -37,7 +37,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.get_json')
     def test_public_repos(self, mocked_method):
-        '''self descriptive'''
+        '''tests the public_repos method '''
         payload = [{"name": "Google"}, {"name": "TT"}]
         mocked_method.return_value = payload
 
@@ -57,7 +57,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ({"license": {"key": "other_license"}}, "my_license", False)
     ])
     def test_has_license(self, repo, key, expectation):
-        '''self descriptive'''
+        '''tests the has_license method'''
         result = GithubOrgClient.has_license(repo, key)
         self.assertEqual(result, expectation)
 
@@ -65,7 +65,7 @@ class TestGithubOrgClient(unittest.TestCase):
 @parameterized_class(['org_payload', 'repos_payload',
                       'expected_repos', 'apache2_repos'], TEST_PAYLOAD)
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """Integration test"""
+    """ A class of Integration tests """
     @classmethod
     def setUpClass(cls):
         cls.get_patcher = patch('requests.get', side_effect=[
@@ -78,7 +78,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         cls.get_patcher.stop()
 
     def test_public_repos(self):
-        """test public repos """
+        """test public_repos """
 
     def test_public_repos_with_license(self):
         """test public with license"""

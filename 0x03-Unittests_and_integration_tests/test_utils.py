@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-""" Unit Test
-"""
+""" Unittests for utils.py """
 import unittest
 from parameterized import parameterized
 from unittest.mock import patch, Mock
@@ -8,14 +7,14 @@ from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
-    ''' nested map test function '''
+    ''' class to test access_nested_map function '''
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
     def test_access_nested_map(self, nested_map, path, expected):
-        ''' test access nested map '''
+        ''' test access_nested_map function '''
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
     @parameterized.expand([
@@ -23,24 +22,24 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": 1}, ("a", "b"))
     ])
     def test_access_nested_map_exception(self, nested_map, path):
-        ''' test exception'''
+        ''' test that exception raises KeyErro'''
         with self.assertRaises(KeyError):
             access_nested_map(nested_map, path)
 
 
 class TestGetJson(unittest.TestCase):
-    ''' get json unittest '''
+    ''' class to test the get_json function '''
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
     ])
     def test_get_json(self, test_url, test_payload):
-        ''' self descriptive'''
+        ''' tests the get_json function'''
         class Mocked(Mock):
-            ''' mocked class'''
+            ''' A mock class representation'''
 
             def json(self):
-                ''' json method mocked'''
+                ''' json method mock'''
                 return test_payload
 
         with patch('requests.get') as MockClass:
@@ -49,13 +48,13 @@ class TestGetJson(unittest.TestCase):
 
 
 class TestMemoize(unittest.TestCase):
-    ''' memoize unittest '''
+    ''' test class for the memoize function '''
 
     def test_memoize(self):
-        ''' memoize test '''
+        ''' tests the memoize function '''
 
         class TestClass:
-            ''' self descriptive'''
+            ''' lets mock '''
 
             def a_method(self):
                 return 42
