@@ -63,8 +63,8 @@ class TestMemoize(unittest.TestCase):
             def a_property(self):
                 return self.a_method()
 
-        with patch.object(TestClass, 'a_method') as mocked:
+        with patch.object(TestClass, 'a_method') as mock_method:
             spec = TestClass()
             spec.a_property
             spec.a_property
-            mocked.asset_called_once()
+            mock_method.assert_called_once()
